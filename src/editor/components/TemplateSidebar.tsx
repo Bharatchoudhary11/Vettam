@@ -1,5 +1,7 @@
 import { Editor } from '@tiptap/react'
-import { useState } from 'react'
+import { motion } from 'framer-motion'
+import { useRef, useState } from 'react'
+import { Button } from '../../components/ui/button'
 
 const templates = [
   {
@@ -21,28 +23,51 @@ const templates = [
 
 export const TemplateSidebar = ({ editor }: { editor: Editor | null }) => {
   const [active, setActive] = useState<string | null>(null)
+  const itemRefs = useRef<(HTMLButtonElement | null)[]>([])
+
+  const handleSelect = (t: { name: string; content: string }) => {
+    editor?.commands.insertContent(t.content)
+    setActive(t.name)
+  }
+
+  const MotionButton = motion(Button)
 
   return (
-    <div className="w-60 border-l p-2 space-y-2 overflow-y-auto">
-      {templates.map((t) => {
-        const isActive = active === t.name
-
-        return (
-          <button
-            key={t.name}
-            className={`w-full text-left border p-2 rounded transition-colors ${
-              isActive ? 'bg-gray-200' : 'bg-white hover:bg-gray-50'
-            }`}
-            onClick={() => {
-              editor?.commands.insertContent(t.content)
-              setActive(t.name)
+    <motion.aside
+      initial={{ x: 80, opacity: 0 }}
+      animate={{ x: 0, opacity: 1 }}
+      className="w-full sm:w-64 border-l bg-white p-4 space-y-2 overflow-y-auto"
+      role="listbox"
+      aria-label="Insert template"
+    >
+      {templates.map((t, i) => (
+        <motion.div
+          key={t.name}
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: i * 0.05 }}
+        >
+          <MotionButton
+            ref={(el) => {
+              itemRefs.current[i] = el
+            }}
+            role="option"
+            aria-selected={active === t.name}
+            variant={active === t.name ? 'secondary' : 'ghost'}
+            className="w-full justify-start"
+            whileHover={{ scale: 1.02 }}
+            whileTap={{ scale: 0.98 }}
+            onClick={() => handleSelect(t)}
+            onKeyDown={(e) => {
+              if (e.key === 'ArrowDown') itemRefs.current[i + 1]?.focus()
+              if (e.key === 'ArrowUp') itemRefs.current[i - 1]?.focus()
             }}
           >
             {t.name}
-          </button>
-        )
-      })}
-    </div>
+          </MotionButton>
+        </motion.div>
+      ))}
+    </motion.aside>
   )
 }
 
