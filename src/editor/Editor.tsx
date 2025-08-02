@@ -5,6 +5,8 @@ import PageBreak from './extensions/PageBreak'
 import { usePagination } from './usePagination'
 import { PageHeader } from './components/PageHeader'
 import { PageFooter } from './components/PageFooter'
+import { OutlinePanel } from './components/OutlinePanel'
+import { TemplateSidebar } from './components/TemplateSidebar'
 import { exportPdf } from './exportPdf'
 
 export const Editor = () => {
@@ -24,40 +26,44 @@ export const Editor = () => {
   }
 
   return (
-    <div className="space-y-4">
-      <div className="flex gap-2">
-        <button
-          className="px-2 py-1 bg-gray-200 rounded"
-          onClick={() => editor?.chain().focus().setPageBreak().run()}
-        >
-          Page Break
-        </button>
-        <button
-          className="px-2 py-1 bg-blue-500 text-white rounded"
-          onClick={handleExport}
-        >
-          Export PDF
-        </button>
-      </div>
-      <EditorContent
-        editor={editor}
-        className="border min-h-[300px] p-4"
-      />
-      <div ref={previewRef} className="preview">
-        {pages.map((html, i) => (
-          <div
-            key={i}
-            className="page w-[794px] h-[1122px] mx-auto mb-4 bg-white shadow flex flex-col"
+    <div className="flex h-screen">
+      <OutlinePanel editor={editor} />
+      <div className="flex-1 space-y-4 p-4 overflow-y-auto">
+        <div className="flex gap-2">
+          <button
+            className="px-2 py-1 bg-gray-200 rounded"
+            onClick={() => (editor?.chain() as any).focus().setPageBreak().run()}
           >
-            <PageHeader title="Document" />
+            Page Break
+          </button>
+          <button
+            className="px-2 py-1 bg-blue-500 text-white rounded"
+            onClick={handleExport}
+          >
+            Export PDF
+          </button>
+        </div>
+        <EditorContent
+          editor={editor}
+          className="border min-h-[300px] p-4"
+        />
+        <div ref={previewRef} className="preview">
+          {pages.map((html, i) => (
             <div
-              className="flex-1 p-8 prose"
-              dangerouslySetInnerHTML={{ __html: html }}
-            />
-            <PageFooter pageNumber={i + 1} />
-          </div>
-        ))}
+              key={i}
+              className="page w-[794px] h-[1122px] mx-auto mb-4 bg-white shadow flex flex-col"
+            >
+              <PageHeader title="Document" />
+              <div
+                className="flex-1 p-8 prose"
+                dangerouslySetInnerHTML={{ __html: html }}
+              />
+              <PageFooter pageNumber={i + 1} />
+            </div>
+          ))}
+        </div>
       </div>
+      <TemplateSidebar editor={editor} />
     </div>
   )
 }
