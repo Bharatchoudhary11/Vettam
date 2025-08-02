@@ -2,6 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
+.ProseMirror {
+  white-space: pre-wrap;
+}
+
 .page {
   background: white;
 }
