@@ -14,9 +14,12 @@ export const PageBreak = Node.create({
     return {
       setPageBreak:
         () =>
-        ({ commands }: any) =>
-          commands.insertContent({ type: this.name }),
-    } as any
+        ({
+          commands,
+        }: {
+          commands: { insertContent: (arg: { type: string }) => void }
+        }) => commands.insertContent({ type: this.name }),
+    }
   },
   parseHTML() {
     return [
