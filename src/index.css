@@ -1,3 +1,12 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.page {
+  background: white;
+}
+
+.page-break {
+  border-top: 2px dashed #bbb;
+  margin: 1rem 0;
+}
