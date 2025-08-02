@@ -21,13 +21,21 @@ export const AISuggestion = ({ editor }: { editor: Editor | null }) => {
     if (!editor) return
     const { from, to } = editor.state.selection
     const text = editor.state.doc.textBetween(from, to)
-    const res = await fetch('/api/suggest-rewrite', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ text }),
-    })
-    const data = await res.json()
-    setSuggestion(data.suggestion)
+    try {
+      const res = await fetch('/api/suggest-rewrite', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ text }),
+      })
+      if (!res.ok) {
+        console.error('Failed to fetch suggestion', res.status)
+        return
+      }
+      const data = await res.json()
+      setSuggestion(data.suggestion)
+    } catch (err) {
+      console.error('Suggestion request failed', err)
+    }
   }
 
   const acceptSuggestion = () => {
