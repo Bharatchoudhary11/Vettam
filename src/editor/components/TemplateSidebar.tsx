@@ -1,4 +1,5 @@
 import { Editor } from '@tiptap/react'
+import { useState } from 'react'
 
 const templates = [
   {
@@ -19,17 +20,28 @@ const templates = [
 ]
 
 export const TemplateSidebar = ({ editor }: { editor: Editor | null }) => {
+  const [active, setActive] = useState<string | null>(null)
+
   return (
     <div className="w-60 border-l p-2 space-y-2 overflow-y-auto">
-      {templates.map((t) => (
-        <button
-          key={t.name}
-          className="w-full text-left border p-2 rounded hover:bg-gray-50"
-          onClick={() => editor?.commands.insertContent(t.content)}
-        >
-          {t.name}
-        </button>
-      ))}
+      {templates.map((t) => {
+        const isActive = active === t.name
+
+        return (
+          <button
+            key={t.name}
+            className={`w-full text-left border p-2 rounded transition-colors ${
+              isActive ? 'bg-gray-200' : 'bg-white hover:bg-gray-50'
+            }`}
+            onClick={() => {
+              editor?.commands.insertContent(t.content)
+              setActive(t.name)
+            }}
+          >
+            {t.name}
+          </button>
+        )
+      })}
     </div>
   )
 }
