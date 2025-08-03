@@ -4,13 +4,19 @@
 
 .ProseMirror {
   white-space: pre-wrap;
+  min-height: 300px;
+  padding: 1rem;
+  outline: none;
 }
 
 .page {
   background: white;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
 }
 
 .page-break {
   border-top: 2px dashed #bbb;
   margin: 1rem 0;
+  cursor: default;
+  user-select: none;
 }
