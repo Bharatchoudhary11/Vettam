@@ -14,11 +14,9 @@ export const PageBreak = Node.create({
     return {
       setPageBreak:
         () =>
-        ({
-          commands,
-        }: {
-          commands: { insertContent: (arg: { type: string }) => void }
-        }) => commands.insertContent({ type: this.name }),
+        ({ commands }) => {
+          return commands.insertContent({ type: this.name })
+        },
     }
   },
   parseHTML() {
@@ -32,5 +30,13 @@ export const PageBreak = Node.create({
     return ['div', { 'data-type': 'page-break', class: 'page-break' }]
   },
 })
+
+declare module '@tiptap/core' {
+  interface Commands<ReturnType> {
+    pageBreak: {
+      setPageBreak: () => ReturnType
+    }
+  }
+}
 
 export default PageBreak

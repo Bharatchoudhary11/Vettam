@@ -10,6 +10,7 @@ export const AISuggestion = ({ editor }: { editor: Editor | null }) => {
     const update = () => {
       const { from, to } = editor.state.selection
       setSelectionActive(from !== to)
+      setSuggestion('')
     }
     editor.on('selectionUpdate', update)
     return () => {
