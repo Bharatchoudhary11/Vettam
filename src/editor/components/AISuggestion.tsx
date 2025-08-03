@@ -60,6 +60,7 @@ export const AISuggestion = ({ editor }: { editor: Editor | null }) => {
     <div className="space-x-2">
       <button
         className="px-2 py-1 bg-purple-500 text-white rounded"
+        onMouseDown={(e) => e.preventDefault()}
         onClick={requestSuggestion}
       >
         AI Suggest
@@ -69,12 +70,14 @@ export const AISuggestion = ({ editor }: { editor: Editor | null }) => {
           <span className="mr-2">{suggestion}</span>
           <button
             className="px-1 py-0.5 bg-green-500 text-white rounded"
+            onMouseDown={(e) => e.preventDefault()}
             onClick={acceptSuggestion}
           >
             Accept
           </button>
           <button
             className="px-1 py-0.5 bg-gray-300 ml-1 rounded"
+            onMouseDown={(e) => e.preventDefault()}
             onClick={() => setSuggestion('')}
           >
             Reject
