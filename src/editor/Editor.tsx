@@ -81,11 +81,11 @@ export const Editor = () => {
       {/* ===== Main Editor Area ===== */}
       <div className="editor-main">
         <div className="toolbar">
-          <button onClick={() => editor?.chain().focus().setPageBreak().run()}>Page Break</button>
-          <button className="primary" onClick={handleExport}>Export PDF</button>
-          <button className="success" onClick={handleSummarize}>Summarize Doc</button>
-          <button className="primary" onClick={handleConsistency}>Check Consistency</button>
-          <button onClick={handleFindClause}>Find Clause</button>
+          <button className="btn btn-secondary" onClick={() => editor?.chain().focus().setPageBreak().run()}>Page Break</button>
+          <button className="btn btn-primary" onClick={handleExport}>Export PDF</button>
+          <button className="btn btn-success" onClick={handleSummarize}>Summarize Doc</button>
+          <button className="btn btn-primary" onClick={handleConsistency}>Check Consistency</button>
+          <button className="btn btn-secondary" onClick={handleFindClause}>Find Clause</button>
           <AISuggestion editor={editor} />
         </div>
 

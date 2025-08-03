@@ -30,44 +30,29 @@ export const RagSearchPanel = () => {
   }
 
   return (
-    <div className="w-72 border-l border-gray-200 p-3 space-y-3 bg-gray-50 shadow-inner">
-      <h2 className="text-base font-semibold text-gray-700 flex items-center gap-1">
-        Legal Search
-      </h2>
-
-      {/* Search Input */}
-      <div className="relative">
+    <div className="rag-panel">
+      <div className="search-wrapper">
         <input
-          className="border border-gray-300 rounded-md pl-8 pr-2 py-1.5 w-full text-sm focus:ring-2 focus:ring-blue-400 focus:outline-none"
+          className="search-input"
           value={query}
           onChange={(e) => setQuery(e.target.value)}
           placeholder="Search clauses..."
         />
-        <Search
-          className="absolute left-2 top-2.5 text-gray-400 w-4 h-4"
-        />
+        <Search className="search-icon" />
       </div>
 
-      {/* Search Button */}
-      <button
-        className="px-3 py-1.5 bg-blue-600 text-white rounded-md w-full text-sm font-medium hover:bg-blue-700 active:scale-95 transition"
-        onClick={search}
-      >
+      <button className="btn btn-primary search-button" onClick={search}>
         {loading ? 'Searching...' : 'Search'}
       </button>
 
-      {/* Results */}
-      <ul className="space-y-2 text-sm">
+      <ul className="results-list">
         {results.length === 0 && !loading && (
-          <li className="text-gray-500 text-xs text-center">No results</li>
+          <li className="no-results">No results</li>
         )}
         {results.map((r, i) => (
-          <li
-            key={i}
-            className="bg-white p-2 rounded-md shadow-sm border border-gray-200 hover:border-blue-400 hover:shadow transition cursor-pointer"
-          >
-            <div className="font-medium text-gray-800">{r.clause}</div>
-            <div className="text-xs text-gray-500 mt-1">Source: {r.source}</div>
+          <li key={i} className="result-item">
+            <div className="clause">{r.clause}</div>
+            <div className="source">Source: {r.source}</div>
           </li>
         ))}
       </ul>

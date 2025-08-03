@@ -89,37 +89,30 @@ export const OutlinePanel = ({ editor }: { editor: Editor | null }) => {
   }
 
   return (
-    <div className="w-64 bg-white border-r border-gray-200 p-3 space-y-1 overflow-y-auto shadow-sm">
-      <h2 className="text-sm font-semibold text-gray-600 mb-2">📑 Outline</h2>
+    <div className="outline-panel">
       {items.map((item, i) => (
-        <div
-          key={item.id}
-          className="flex items-center gap-1 px-2 py-1 rounded hover:bg-gray-100 transition group"
-        >
+        <div key={item.id} className="outline-item">
           <button
             onClick={() => navigate(item.id)}
-            className="flex-1 text-left truncate text-gray-800 text-sm group-hover:text-purple-600"
+            className="outline-text"
             style={{ paddingLeft: (item.level - 1) * 12 }}
           >
             {item.text || 'Untitled'}
           </button>
-          <button
-            onClick={() => toggleCollapse(item.pos)}
-            className="px-1 text-gray-500 hover:text-gray-800"
-          >
+          <button onClick={() => toggleCollapse(item.pos)} className="outline-btn">
             {collapsed.has(item.pos) ? <ChevronRight size={14} /> : <ChevronDown size={14} />}
           </button>
           <button
             disabled={i === 0}
             onClick={() => moveUp(i)}
-            className="px-1 text-gray-500 hover:text-purple-600 disabled:opacity-30"
+            className="outline-btn primary"
           >
             <ArrowUp size={14} />
           </button>
           <button
             disabled={i === items.length - 1}
             onClick={() => moveDown(i)}
-            className="px-1 text-gray-500 hover:text-purple-600 disabled:opacity-30"
+            className="outline-btn primary"
           >
             <ArrowDown size={14} />
           </button>

@@ -10,26 +10,19 @@ interface PageHeaderProps {
 /** Styled page header with optional logo and subtitle */
 export const PageHeader: FC<PageHeaderProps> = ({ title, subtitle, logoUrl }) => {
   return (
-    <header className="page-header flex items-center justify-between px-4 py-2 border-b border-gray-300 bg-gray-50 shadow-sm">
-      {/* Left: Logo or icon */}
-      <div className="flex items-center gap-2">
+    <header className="page-header">
+      <div className="left">
         {logoUrl ? (
-          <img src={logoUrl} alt="Logo" className="h-6 w-auto" />
+          <img src={logoUrl} alt="Logo" className="page-header-icon" />
         ) : (
-          <FileText className="w-5 h-5 text-purple-600" />
+          <FileText className="page-header-icon" />
         )}
-        <div className="flex flex-col">
-          <span className="text-sm font-medium text-gray-800">{title || 'Untitled Document'}</span>
-          {subtitle && (
-            <span className="text-xs text-gray-500">{subtitle}</span>
-          )}
+        <div>
+          <span className="title">{title || 'Untitled Document'}</span>
+          {subtitle && <span className="subtitle">{subtitle}</span>}
         </div>
       </div>
-
-      {/* Right: Placeholder for date or extra info */}
-      <div className="text-xs text-gray-500">
-        {new Date().toLocaleDateString()}
-      </div>
+      <div className="date">{new Date().toLocaleDateString()}</div>
     </header>
   )
 }
