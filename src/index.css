@@ -57,7 +57,18 @@
   padding: 10px;
   background-color: white;
   border-radius: 4px;
-  margin-bottom: 20px;
+  margin: 0 auto 20px;
+  width: 100%;
+  max-width: var(--editor-width);
+  box-sizing: border-box;
+}
+
+.preview {
+  width: 100%;
+  max-width: var(--editor-width);
+  margin: 0 auto;
+  box-sizing: border-box;
+  overflow-x: hidden;
 }
 
 .page {
@@ -66,8 +77,9 @@
   border-radius: 6px;
   padding: 32px;
   margin: 20px auto;
-  width: 794px;
+  width: 100%;
   min-height: 1122px;
+  box-sizing: border-box;
 }
 
 /* Outline Panel */
