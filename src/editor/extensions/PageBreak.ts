@@ -1,42 +1,57 @@
 import { Node } from '@tiptap/core'
 
-/**
- * PageBreak is a simple block level atom that represents a manual page break.
- * It renders a div with a data attribute that can be detected by the pagination engine
- * and styled via CSS.
- */
-export const PageBreak = Node.create({
+export interface PageBreakOptions {
+  HTMLAttributes: Record<string, any>;
+}
+
+declare module '@tiptap/core' {
+  interface Commands<ReturnType> {
+    pageBreak: {
+      setPageBreak: () => ReturnType;
+    }
+  }
+}
+
+const PageBreak = Node.create<PageBreakOptions>({
   name: 'pageBreak',
+
   group: 'block',
+  
   atom: true,
-  selectable: true,
+
+  addOptions() {
+    return {
+      HTMLAttributes: {},
+    }
+  },
+
   addCommands() {
     return {
       setPageBreak:
         () =>
         ({ commands }) => {
-          return commands.insertContent({ type: this.name })
+          return commands.insertContent({
+            type: this.name,
+            marks: [],
+          })
         },
     }
   },
+
+  renderHTML({ HTMLAttributes }: { HTMLAttributes: Record<string, any> }) {
+    return ['div', { 
+      class: 'page-break',
+      ...HTMLAttributes 
+    }]
+  },
+
   parseHTML() {
     return [
       {
-        tag: 'div[data-type="page-break"]',
+        tag: 'div.page-break',
       },
     ]
   },
-  renderHTML() {
-    return ['div', { 'data-type': 'page-break', class: 'page-break' }]
-  },
 })
-
-declare module '@tiptap/core' {
-  interface Commands<ReturnType> {
-    pageBreak: {
-      setPageBreak: () => ReturnType
-    }
-  }
-}
 
 export default PageBreak
