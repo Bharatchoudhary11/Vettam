@@ -59,7 +59,7 @@ export function usePagination(editor: Editor | null) {
       const html = editor.getHTML()
 
       // Split on explicit manual page breaks first
-      let parts = html.split(/<div[^>]*data-type="page-break"[^>]*><\/div>/gi)
+        const parts = html.split(/<div[^>]*data-type="page-break"[^>]*><\/div>/gi)
 
       // Apply automatic pagination on top of manual splits
       let autoPages: string[] = []

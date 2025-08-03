@@ -15,36 +15,30 @@ type ButtonProps = {
 };
 
 const buttonStyles: Record<string, string> = {
-  primary: "bg-purple-600 text-white hover:bg-purple-700",
-  secondary: "bg-gray-200 text-gray-800 hover:bg-gray-300",
-  success: "bg-green-500 text-white hover:bg-green-600",
-  danger: "bg-red-500 text-white hover:bg-red-600",
+  primary: 'btn-primary',
+  secondary: 'btn-secondary',
+  success: 'btn-success',
+  danger: 'btn-danger',
 };
 
 const sizeStyles: Record<string, string> = {
-  sm: "px-3 py-1 text-sm",
-  md: "px-4 py-2 text-base",
-  lg: "px-6 py-3 text-lg",
+  sm: 'btn-sm',
+  md: '',
+  lg: 'btn-lg',
 };
 
-const StyledButton = ({
-  children,
-  variant = "primary",
-  size = "md",
-  onClick,
-}: ButtonProps) => {
+const StyledButton = ({ children, variant = 'primary', size = 'md', onClick }: ButtonProps) => {
   return (
     <motion.button
       whileTap={{ scale: 0.95 }}
       whileHover={{ scale: 1.03 }}
-      className={`rounded-lg font-medium shadow-md transition-all duration-200 
-        ${buttonStyles[variant]} ${sizeStyles[size]}`}
+      className={`btn ${buttonStyles[variant]} ${sizeStyles[size]}`.trim()}
       onClick={onClick}
     >
       {children}
     </motion.button>
-  );
-};
+  )
+}
 
 // ---------------------
 // ✅ AI Suggestion Component
@@ -100,7 +94,7 @@ export const AISuggestion = ({ editor }: { editor: Editor | null }) => {
       .focus()
       .insertContentAt(
         { from, to },
-        `<span class="bg-red-200 line-through px-0.5">${original}</span><span class="bg-green-200 px-0.5">${suggestion}</span>`,
+        `<span style="background-color:#fecaca;text-decoration:line-through;padding:0 2px;">${original}</span><span style="background-color:#bbf7d0;padding:0 2px;">${suggestion}</span>`,
       )
       .run()
     setSuggestion('')
@@ -113,7 +107,7 @@ export const AISuggestion = ({ editor }: { editor: Editor | null }) => {
       initial={{ opacity: 0, y: 5 }}
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: 5 }}
-      className="flex items-center space-x-3 p-2 bg-white shadow-md rounded-lg border border-gray-200"
+      className="suggestion-container"
     >
       <StyledButton variant="primary" size="md" onClick={requestSuggestion}>
         <Sparkles size={16} />
@@ -126,9 +120,9 @@ export const AISuggestion = ({ editor }: { editor: Editor | null }) => {
             initial={{ opacity: 0, x: -10 }}
             animate={{ opacity: 1, x: 0 }}
             exit={{ opacity: 0, x: -10 }}
-            className="flex items-center space-x-2 bg-gray-100 px-3 py-1 rounded-md border border-gray-300"
+            className="suggestion-box"
           >
-            <span className="text-gray-800">{suggestion}</span>
+            <span>{suggestion}</span>
             <StyledButton variant="success" size="sm" onClick={acceptSuggestion}>
               <Check size={14} /> Accept
             </StyledButton>
