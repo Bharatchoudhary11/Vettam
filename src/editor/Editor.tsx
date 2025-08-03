@@ -21,9 +21,7 @@ export const Editor = () => {
   const previewRef = useRef<HTMLDivElement>(null)
 
   const handleExport = async () => {
-    const nodes = Array.from(
-      previewRef.current?.querySelectorAll('.page') || [],
-    ) as HTMLElement[]
+    const nodes = Array.from(previewRef.current?.querySelectorAll('.page') || []) as HTMLElement[]
     await exportPdf(nodes)
   }
 
@@ -51,8 +49,8 @@ export const Editor = () => {
 
   const handleFindClause = async () => {
     const clause = prompt('Enter clause text to find') || ''
-    const doc = editor?.getText() || ''
     if (!clause) return
+    const doc = editor?.getText() || ''
     const res = await fetch('/api/find-clause', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -63,64 +61,46 @@ export const Editor = () => {
   }
 
   return (
-    <div className="flex h-screen">
-      <OutlinePanel editor={editor} />
-      <div className="flex-1 space-y-4 p-4 overflow-y-auto">
-        <div className="flex gap-2 flex-wrap">
-          <button
-            className="px-2 py-1 bg-gray-200 rounded"
-            onClick={() => editor?.chain().focus().setPageBreak().run()}
-          >
-            Page Break
-          </button>
-          <button
-            className="px-2 py-1 bg-blue-500 text-white rounded"
-            onClick={handleExport}
-          >
-            Export PDF
-          </button>
-          <button
-            className="px-2 py-1 bg-green-600 text-white rounded"
-            onClick={handleSummarize}
-          >
-            Summarize Doc
-          </button>
-          <button
-            className="px-2 py-1 bg-yellow-500 text-white rounded"
-            onClick={handleConsistency}
-          >
-            Check Consistency
-          </button>
-          <button
-            className="px-2 py-1 bg-purple-600 text-white rounded"
-            onClick={handleFindClause}
-          >
-            Find Clause
-          </button>
+    <div className="editor-container">
+      {/* ===== Left Sidebar ===== */}
+      <div className="sidebar">
+        <div className="outline-section">
+          <h3 className="sidebar-title">Outline</h3>
+          <OutlinePanel editor={editor} />
         </div>
-        <AISuggestion editor={editor} />
-        <EditorContent
-          editor={editor}
-          className="border min-h-[300px] p-4"
-        />
+        <div className="template-section">
+          <h3 className="sidebar-title">Templates</h3>
+          <TemplateSidebar editor={editor} />
+        </div>
+        <div className="search-section">
+          <h3 className="sidebar-title">Legal Search</h3>
+          <RagSearchPanel />
+        </div>
+      </div>
+
+      {/* ===== Main Editor Area ===== */}
+      <div className="editor-main">
+        <div className="toolbar">
+          <button onClick={() => editor?.chain().focus().setPageBreak().run()}>Page Break</button>
+          <button className="primary" onClick={handleExport}>Export PDF</button>
+          <button className="success" onClick={handleSummarize}>Summarize Doc</button>
+          <button className="primary" onClick={handleConsistency}>Check Consistency</button>
+          <button onClick={handleFindClause}>Find Clause</button>
+          <AISuggestion editor={editor} />
+        </div>
+
+        <EditorContent editor={editor} className="editor-box" />
+
         <div ref={previewRef} className="preview">
           {pages.map((html, i) => (
-            <div
-              key={i}
-              className="page w-[794px] h-[1122px] mx-auto mb-4 bg-white shadow flex flex-col"
-            >
+            <div key={i} className="page">
               <PageHeader title="Document" />
-              <div
-                className="flex-1 p-8 prose"
-                dangerouslySetInnerHTML={{ __html: html }}
-              />
+              <div className="page-content" dangerouslySetInnerHTML={{ __html: html }} />
               <PageFooter pageNumber={i + 1} />
             </div>
           ))}
         </div>
       </div>
-      <TemplateSidebar editor={editor} />
-      <RagSearchPanel />
     </div>
   )
 }

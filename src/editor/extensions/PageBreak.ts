@@ -14,14 +14,17 @@ declare module '@tiptap/core' {
 
 const PageBreak = Node.create<PageBreakOptions>({
   name: 'pageBreak',
-
   group: 'block',
-  
   atom: true,
+  selectable: true,
 
   addOptions() {
     return {
-      HTMLAttributes: {},
+      HTMLAttributes: {
+        class: 'page-break',
+        role: 'separator',
+        'aria-label': 'Page Break'
+      },
     }
   },
 
@@ -32,7 +35,6 @@ const PageBreak = Node.create<PageBreakOptions>({
         ({ commands }) => {
           return commands.insertContent({
             type: this.name,
-            marks: [],
           })
         },
     }
@@ -40,7 +42,7 @@ const PageBreak = Node.create<PageBreakOptions>({
 
   renderHTML({ HTMLAttributes }: { HTMLAttributes: Record<string, any> }) {
     return ['div', { 
-      class: 'page-break',
+      ...this.options.HTMLAttributes,
       ...HTMLAttributes 
     }]
   },

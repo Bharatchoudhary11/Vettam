@@ -1,5 +1,6 @@
 import { Editor } from '@tiptap/react'
 import { useState } from 'react'
+import { FileText } from 'lucide-react'
 
 const templates = [
   {
@@ -23,21 +24,28 @@ export const TemplateSidebar = ({ editor }: { editor: Editor | null }) => {
   const [active, setActive] = useState<string | null>(null)
 
   return (
-    <div className="w-60 border-l p-2 space-y-2 overflow-y-auto">
+    <div className="w-72 border-l border-gray-200 p-3 space-y-3 overflow-y-auto bg-gray-50 shadow-inner">
+      <h2 className="text-base font-semibold text-gray-700 flex items-center gap-2">
+        📑 Templates
+      </h2>
+
       {templates.map((t) => {
         const isActive = active === t.name
 
         return (
           <button
             key={t.name}
-            className={`w-full text-left border p-2 rounded transition-colors ${
-              isActive ? 'bg-gray-200' : 'bg-white hover:bg-gray-50'
-            }`}
+            className={`w-full flex items-center gap-2 text-left px-3 py-2 rounded-md border text-sm font-medium transition-all duration-200 shadow-sm
+              ${isActive 
+                ? 'bg-purple-100 border-purple-400 text-purple-700' 
+                : 'bg-white border-gray-200 text-gray-700 hover:bg-gray-100 hover:border-purple-300'
+              }`}
             onClick={() => {
               editor?.commands.insertContent(t.content)
               setActive(t.name)
             }}
           >
+            <FileText size={16} className="text-gray-500" />
             {t.name}
           </button>
         )
