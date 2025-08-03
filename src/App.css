@@ -5,6 +5,7 @@
   --background-color: #f9fafb;
   --text-color: #1f2937;
   --transition-speed: 0.3s;
+  --editor-width: 794px;
 }
 
 html {
