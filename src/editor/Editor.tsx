@@ -17,7 +17,7 @@ export const Editor = () => {
     content: '<p></p>',
   })
 
-  const pages = usePagination(editor?.getHTML() || '')
+  const pages = usePagination(editor)
   const previewRef = useRef<HTMLDivElement>(null)
 
   const handleExport = async () => {
