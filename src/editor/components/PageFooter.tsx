@@ -6,11 +6,7 @@ interface PageFooterProps {
 
 /** Basic footer that displays the current page number */
 export const PageFooter: FC<PageFooterProps> = ({ pageNumber }) => {
-  return (
-    <footer className="page-footer text-center py-2 border-t border-gray-300 text-sm text-gray-600">
-      Page {pageNumber}
-    </footer>
-  )
+  return <footer className="page-footer">Page {pageNumber}</footer>
 }
 
 export default PageFooter

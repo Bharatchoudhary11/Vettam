@@ -88,26 +88,26 @@ export const OutlinePanel = ({ editor }: { editor: Editor | null }) => {
   }
 
   return (
-    <div className="w-60 border-r p-2 space-y-1 overflow-y-auto">
+    <div className="outline-panel">
       {items.map((item, i) => (
-        <div key={item.id} className="flex items-center gap-1">
+        <div key={item.id} className="outline-item">
           <button
             onClick={() => navigate(item.id)}
-            className="flex-1 text-left truncate"
+            className="outline-text"
             style={{ paddingLeft: (item.level - 1) * 8 }}
           >
             {item.text || 'Untitled'}
           </button>
-          <button onClick={() => toggleCollapse(item.pos)} className="px-1">
+          <button onClick={() => toggleCollapse(item.pos)} className="icon-button">
             {collapsed.has(item.pos) ? '+' : '-'}
           </button>
-          <button disabled={i === 0} onClick={() => moveUp(i)} className="px-1">
+          <button disabled={i === 0} onClick={() => moveUp(i)} className="icon-button">
             ↑
           </button>
           <button
             disabled={i === items.length - 1}
             onClick={() => moveDown(i)}
-            className="px-1"
+            className="icon-button"
           >
             ↓
           </button>

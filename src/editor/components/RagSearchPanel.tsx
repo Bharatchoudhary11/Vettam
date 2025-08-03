@@ -20,25 +20,22 @@ export const RagSearchPanel = () => {
   }
 
   return (
-    <div className="w-60 border-l p-2 space-y-2 overflow-y-auto">
-      <h2 className="font-bold">Legal Search</h2>
+    <div className="search-panel">
+      <h2 className="panel-title">Legal Search</h2>
       <input
-        className="border p-1 w-full"
+        className="input-text"
         value={query}
         onChange={(e) => setQuery(e.target.value)}
         placeholder="Search clauses..."
       />
-      <button
-        className="px-2 py-1 bg-blue-500 text-white w-full"
-        onClick={search}
-      >
+      <button className="btn btn-primary btn-block" onClick={search}>
         Search
       </button>
-      <ul className="space-y-2 text-sm">
+      <ul className="result-list">
         {results.map((r, i) => (
           <li key={i}>
-            <div className="font-semibold">{r.clause}</div>
-            <div className="text-gray-600">{r.source}</div>
+            <div className="result-clause">{r.clause}</div>
+            <div className="result-source">{r.source}</div>
           </li>
         ))}
       </ul>

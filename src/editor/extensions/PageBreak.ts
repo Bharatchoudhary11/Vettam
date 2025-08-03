@@ -1,7 +1,7 @@
 import { Node } from '@tiptap/core'
 
 export interface PageBreakOptions {
-  HTMLAttributes: Record<string, any>;
+  HTMLAttributes: Record<string, unknown>;
 }
 
 declare module '@tiptap/core' {
@@ -38,7 +38,7 @@ export default Node.create<PageBreakOptions>({
     }
   },
 
-  renderHTML({ HTMLAttributes }: { HTMLAttributes: Record<string, any> }) {
+  renderHTML({ HTMLAttributes }: { HTMLAttributes: Record<string, unknown> }) {
     return ['div', { 
       class: 'page-break',
       ...HTMLAttributes 

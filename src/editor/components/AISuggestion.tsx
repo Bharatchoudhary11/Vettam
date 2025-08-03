@@ -47,7 +47,7 @@ export const AISuggestion = ({ editor }: { editor: Editor | null }) => {
       .focus()
       .insertContentAt(
         { from, to },
-        `<span class="bg-red-200 line-through">${original}</span><span class="bg-green-200">${suggestion}</span>`,
+        `<span style="background:#fecaca;text-decoration:line-through;">${original}</span><span style="background:#bbf7d0;">${suggestion}</span>`,
       )
       .run()
     setSuggestion('')
@@ -56,24 +56,18 @@ export const AISuggestion = ({ editor }: { editor: Editor | null }) => {
   if (!selectionActive) return null
 
   return (
-    <div className="space-x-2">
-      <button
-        className="px-2 py-1 bg-purple-500 text-white rounded"
-        onClick={requestSuggestion}
-      >
+    <div className="suggestion-actions">
+      <button className="btn btn-purple" onClick={requestSuggestion}>
         AI Suggest
       </button>
       {suggestion && (
-        <span>
-          <span className="mr-2">{suggestion}</span>
-          <button
-            className="px-1 py-0.5 bg-green-500 text-white rounded"
-            onClick={acceptSuggestion}
-          >
+        <span className="suggestion-result">
+          <span className="suggestion-text">{suggestion}</span>
+          <button className="btn btn-success btn-small" onClick={acceptSuggestion}>
             Accept
           </button>
           <button
-            className="px-1 py-0.5 bg-gray-300 ml-1 rounded"
+            className="btn btn-gray btn-small"
             onClick={() => setSuggestion('')}
           >
             Reject

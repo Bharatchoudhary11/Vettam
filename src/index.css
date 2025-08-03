@@ -1,6 +1,135 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+:root {
+  --color-primary: #1d4ed8;
+  --color-primary-dark: #1e40af;
+  --color-success: #16a34a;
+  --color-success-dark: #15803d;
+  --color-warning: #eab308;
+  --color-warning-dark: #ca8a04;
+  --color-purple: #9333ea;
+  --color-purple-dark: #7e22ce;
+  --color-gray: #d1d5db;
+  --color-gray-dark: #4b5563;
+  --color-background: #f9fafb;
+  --color-text: #111827;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: var(--color-background);
+  color: var(--color-text);
+  font-family: system-ui, sans-serif;
+}
+
+.app-container {
+  padding: 1rem;
+  min-height: 100vh;
+}
+
+/* Buttons */
+.btn {
+  padding: 0.25rem 0.5rem;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background 0.2s, opacity 0.2s;
+}
+.btn-gray { background: #e5e7eb; }
+.btn-gray:hover { background: #d1d5db; }
+.btn-primary { background: var(--color-primary); color: #fff; }
+.btn-primary:hover { background: var(--color-primary-dark); }
+.btn-success { background: var(--color-success); color: #fff; }
+.btn-success:hover { background: var(--color-success-dark); }
+.btn-warning { background: var(--color-warning); color: #fff; }
+.btn-warning:hover { background: var(--color-warning-dark); }
+.btn-purple { background: var(--color-purple); color: #fff; }
+.btn-purple:hover { background: var(--color-purple-dark); }
+.btn-block { width: 100%; }
+.btn-small { padding: 0.125rem 0.25rem; font-size: 0.875rem; }
+.btn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+/* Layout */
+.editor-layout { display: flex; height: 100vh; }
+.editor-main { flex: 1; display: flex; flex-direction: column; gap: 1rem; padding: 1rem; overflow-y: auto; }
+.toolbar { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+
+/* Panels */
+.outline-panel, .template-sidebar, .search-panel {
+  width: 15rem;
+  padding: 0.5rem;
+  overflow-y: auto;
+}
+.outline-panel { border-right: 1px solid var(--color-gray); }
+.template-sidebar, .search-panel { border-left: 1px solid var(--color-gray); }
+.outline-panel > * + *, .template-sidebar > * + *, .search-panel > * + * {
+  margin-top: 0.5rem;
+}
+
+.outline-item { display: flex; align-items: center; gap: 0.25rem; }
+.outline-text {
+  flex: 1;
+  text-align: left;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  background: none;
+  border: none;
+  padding: 0.25rem;
+  cursor: pointer;
+}
+.icon-button {
+  padding: 0.25rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.input-text {
+  width: 100%;
+  padding: 0.25rem;
+  border: 1px solid var(--color-gray);
+  border-radius: 4px;
+}
+
+.panel-title { font-weight: 700; }
+
+.result-list { list-style: none; padding: 0; margin: 0; }
+.result-list > * + * { margin-top: 0.5rem; }
+.result-clause { font-weight: 600; }
+.result-source { color: var(--color-gray-dark); font-size: 0.875rem; }
+
+.template-button {
+  width: 100%;
+  text-align: left;
+  border: 1px solid var(--color-gray);
+  padding: 0.5rem;
+  border-radius: 4px;
+  background: #fff;
+  transition: background 0.2s;
+}
+.template-button:hover { background: #f9fafb; }
+.template-button.active { background: #e5e7eb; }
+
+.suggestion-actions > * + * { margin-left: 0.5rem; }
+.suggestion-result > * + * { margin-left: 0.25rem; }
+.suggestion-text { margin-right: 0.5rem; }
+
+.error-box {
+  background: #fee2e2;
+  border: 1px solid #f87171;
+  color: #b91c1c;
+  padding: 1rem;
+  border-radius: 4px;
+}
+
+.editor-content {
+  border: 1px solid var(--color-gray);
+  min-height: 300px;
+  padding: 1rem;
+}
 
 .ProseMirror {
   white-space: pre-wrap;
@@ -9,9 +138,32 @@
   outline: none;
 }
 
+.preview { background: var(--color-background); }
+
 .page {
   background: white;
   box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+  width: 794px;
+  height: 1122px;
+  margin: 0 auto 1rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.page-header {
+  text-align: center;
+  padding: 0.5rem 0;
+  border-bottom: 1px solid var(--color-gray);
+  font-size: 0.875rem;
+  color: var(--color-gray-dark);
+}
+
+.page-footer {
+  text-align: center;
+  padding: 0.5rem 0;
+  border-top: 1px solid var(--color-gray);
+  font-size: 0.875rem;
+  color: var(--color-gray-dark);
 }
 
 .page-break {
@@ -20,3 +172,5 @@
   cursor: default;
   user-select: none;
 }
+
+.page-body { flex: 1; padding: 2rem; line-height: 1.6; }
