@@ -13,4 +13,6 @@
 .page-break {
   border-top: 2px dashed #bbb;
   margin: 1rem 0;
+  break-after: page;
+  page-break-after: always;
 }
